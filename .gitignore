@@ -1,0 +1,18 @@
+# these are intended to be copied from the .example versions and customized as
+# needed. As such, we ignore them. 
+compose.env
+docker-compose.yml
+
+# don't want to check-in actual credentials of any kind, hashed or not
+files/creds
+
+# tds and tomcat caches, logs, etc. that should not be under version control
+# (some maybe later, like templates)
+tds-configs/cache
+tds-configs/logs
+tds-configs/notebooks
+tds-configs/public
+tds-configs/state
+tds-configs/templates
+logs/
+
