@@ -1,0 +1,5 @@
+<tomcat-users>
+  <user username="admin"
+    password="your hash here - see https://github.com/Unidata/tomcat-docker#digested-passwords"
+    roles="tdsConfig,tdsMonitor"/>
+</tomcat-users>

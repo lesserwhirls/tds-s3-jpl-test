@@ -1,0 +1,5 @@
+[mur-bucket]
+# see https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints
+region=<aws-region-code>
+aws_access_key_id=<id>
+aws_secret_access_key=<key>

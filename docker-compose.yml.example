@@ -1,0 +1,22 @@
+---
+version: '3.7'
+
+services:
+  tds:
+    image: unidata/thredds-docker:5.0-SNAPSHOT
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    container_name: thredds
+    volumes:
+      - ./logs/tomcat/:/usr/local/tomcat/logs/
+      - ./logs/tds/:/usr/local/tomcat/content/thredds/logs/
+      # make sure your files containing credentials live in files/creds, as
+      # that directory is ignored by .gitignore or, better yet, keep them
+      # outside of the git repository directory
+      - ./files/creds/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - ./files/creds/aws_creds:/usr/local/tomcat/.aws/credentials
+      - ./tds-configs/:/usr/local/tomcat/content/thredds/
+    env_file:
+      - "compose.env"
+

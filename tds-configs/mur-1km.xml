@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)"
+  xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0
+  http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
+
+  <!-- here we map an alias to an s3 bucket called "unidata-jpl-sandbox" -->
+  <!-- "mur-bucket" is the name of a profile containing aws credentials -->
+  <!-- "aws" is a generic host name used in the special case of S3 -->
+  <datasetRoot path="mur-test" location="cdms3://mur-bucket@aws/unidata-jpl-sandbox" />
+
+  <dataset name="GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)">
+
+    <metadata inherited="true">
+      <serviceName>obstoreGrid</serviceName>
+      <description>
+        A Group for High Resolution Sea Surface Temperature (GHRSST) Level 4
+        sea surface temperature analysis produced as a retrospective dataset 
+        (four day latency) and near-real-time dataset (one day latency) at the
+        JPL Physical Oceanography DAAC using wavelets as basis functions in an
+	optimal interpolation approach on a global 0.01 degree grid. The 
+        version 4 Multiscale Ultrahigh Resolution (MUR) L4 analysis is based
+        upon nighttime GHRSST L2P skin and subskin SST observations from
+        several instruments including the NASA Advanced Microwave Scanning
+	Radiometer-EOS (AMSR-E), the JAXA Advanced Microwave Scanning
+        Radiometer 2 on GCOM-W1, the Moderate Resolution Imaging
+        Spectroradiometers (MODIS) on the NASA Aqua and Terra platforms, the US
+        Navy microwave WindSat radiometer, the Advanced Very High Resolution
+        Radiometer (AVHRR) on several NOAA satellites, and in situ SST
+        observations from the NOAA iQuam project. The ice concentration data
+        are from the archives at the EUMETSAT Ocean and Sea Ice Satellite
+        Application Facility (OSI SAF) High Latitude Processing Center and are
+        also used for an improved SST parameterization for the high-latitudes.
+        The dataset also contains additional variables for some granules
+        including a SST anomaly derived from a MUR climatology and the temporal
+        distance to the nearest IR measurement for each pixel. This dataset is
+        funded by the NASA MEaSUREs program 
+        (http://earthdata.nasa.gov/our-community/community-data-system-programs/measures-projects),
+        and created by a team led by Dr. Toshio M. Chin from JPL. It adheres to
+        the GHRSST Data Processing Specification (GDS) version 2 format
+        specifications. Use the file global metadata "history:" attribute to
+        determine if a granule is near-realtime or retrospective.
+      </description>
+      <documentation xlink:href="https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1"
+        xlink:title="PO.DAAC Dataset Landing Page"/>
+      <keyword>GHRSST</keyword>
+      <keyword>sea surface temperature</keyword>
+      <keyword>Level 4</keyword>
+      <keyword>sst</keyword>
+      <keyword>surface temperature</keyword>
+      <keyword>MUR</keyword>
+      <keyword>foundation SST</keyword>
+      <keyword>SST anomaly</keyword>
+      <keyword>anomaly</keyword>
+      <creator>
+        <name>JPL MUR MEaSUREs Project</name>
+	<contact url="http://mur.jpl.nasa.gov" email="podaac@podaac.jpl.nasa.gov" />
+      </creator>
+      <geospatialCoverage>
+        <northsouth>
+          <start>-89.99</start>
+          <size>179.98</size>
+          <resolution>0.01</resolution>
+          <units>degrees_north</units>
+        </northsouth>
+        <eastwest>
+          <start>-179.99</start>
+          <size>359.99</size>
+          <resolution>0.01</resolution>
+          <units>degrees_east</units>
+        </eastwest>
+      </geospatialCoverage>
+      <dataType>Grid</dataType>
+      <dataFormat>NetCDF-4</dataFormat>
+    </metadata>
+
+    <dataset name="2019-01-01 MUR Global v4.1" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01"
+      urlPath="mur-test/MUR/2019_01_01_090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc">
+      <metadata>
+        <timeCoverage>
+          <start>2019-01-01T00:00:00</start>
+          <end>2019-01-01T00:00:00</end>
+        </timeCoverage>
+      </metadata>
+    </dataset>
+  </dataset>
+</catalog>
+
