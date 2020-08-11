@@ -11,6 +11,9 @@
   <!-- "aws" is a generic host name used in the special case of S3 -->
   <datasetRoot path="mur-test" location="cdms3://mur-bucket@aws/unidata-jpl-sandbox" />
 
+  <!-- location is a path inside the docker container -->
+  <datasetRoot path="aggregations" location="/usr/local/tomcat/content/thredds/ncml_files" />
+
   <dataset name="GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)">
 
     <metadata inherited="true">
@@ -81,10 +84,21 @@
       <metadata>
         <timeCoverage>
           <start>2019-01-01T00:00:00</start>
-          <end>2019-01-01T00:00:00</end>
+          <end>2019-01-01T23:59:59</end>
+        </timeCoverage>
+      </metadata>
+    </dataset>
+
+    <dataset name="2019-01-01 - 2019-01-07 Aggregation" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01-seven-day"
+      urlPath="aggregations/mur-2019-01-01-seven-day-agg.ncml">
+      <metadata>
+        <timeCoverage>
+          <start>2019-01-01T00:00:00</start>
+          <end>2019-01-07T23:59:59</end>
         </timeCoverage>
       </metadata>
     </dataset>
   </dataset>
+
 </catalog>
 

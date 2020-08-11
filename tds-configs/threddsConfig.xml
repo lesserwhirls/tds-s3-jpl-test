@@ -73,7 +73,12 @@
     -->
 
   </htmlSetup>
-  
+
+  <!-- need to use new netCDF-Java builder interface for NcML aggregations to work -->
+  <Experimental>
+    <useNetcdfJavaBuilders>true</useNetcdfJavaBuilders>
+  </Experimental>
+
   <!-- 
     The <TdsUpdateConfig> element controls if and how the TDS checks
     for updates. The default is for the TDS to check for the current
