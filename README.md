@@ -34,12 +34,14 @@ This will reduce the time needed by the TDS to generate a catalog at a given lev
 
 # What's in this repository
 1) Two shell scripts to control `docker-compose`:
+
    * tds-start.sh (start the TDS)
    * tds-stop.sh (stop the TDS)
 
    Note that the underlying container is removed when the TDS is stopped.
 
 2) `docker-compose` configuration
+
    The scripts above assume that the main configuration file used by docker-compose to setup the TDS container is named `docker-compose.yml`.
    `docker-compose.yml.example` is an example of what that looks like on the Unidata system.
    This example config refers to `compose.env`, which holds certain container configuration related environmental variables.
@@ -53,13 +55,22 @@ This will reduce the time needed by the TDS to generate a catalog at a given lev
    Depending on how you are managing credentials, the `aws_creds` file may not be needed.
 
 3) TDS configuration files
+   
    The TDS configuration files live under `tds-configs/`.
    Perhaps the most critical at this point is the `mur-1km.xml` TDS Configuration Catalog.
    This is where we tell the TDS where to look for data, what services to expose, what metadata to add, etc.
-   Currently, this configuration catalog is set to serve one granule.
-   The critical elements are the [`datasetRoot` element](https://github.com/lesserwhirls/tds-s3-jpl-test/blob/7b8eda967ba207dfab0c6aba88a9197cc351010f/tds-configs/mur-1km.xml#L12), and the final [dataset](https://github.com/lesserwhirls/tds-s3-jpl-test/blob/7b8eda967ba207dfab0c6aba88a9197cc351010f/tds-configs/mur-1km.xml#L79)
+   The critical elements related to S3 are the [`datasetRoot` element](https://github.com/lesserwhirls/tds-s3-jpl-test/blob/7b8eda967ba207dfab0c6aba88a9197cc351010f/tds-configs/mur-1km.xml#L12), and the next-to-last [dataset](https://github.com/lesserwhirls/tds-s3-jpl-test/blob/7b8eda967ba207dfab0c6aba88a9197cc351010f/tds-configs/mur-1km.xml#L79) element.
    The `datasetRoot` element essentially provides a top level alias to the S3 bucket (i.e. `mur-test` is associated with `cdms3://mur-bucket@aws/unidata-jpl-sandbox`).
    The `dataset` element then uses the `mur-test` datasetRoot name in combination with the key to the granule we with wish to serve (i.e. `MUR/2019_01_01_090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc`).
+
+   The `mur-1km.xml` is also setup to serve a seven day NcML aggregation.
+   Aggregation of S3 objects have some limitations in how they are configured.
+   First, you will need to edit your `threddsConfig.xml` to [enable an experimental option](https://github.com/lesserwhirls/tds-s3-jpl-test/blob/d92bacfb17e8fdd3bfaebba7cc7546680292ba87/tds-configs/threddsConfig.xml#L77-L80), which tells the netCDF-Java library to use its new builder interface.
+   Next, the aggregation needs to live in a seperate NcML file (i.e. the aggregation cannot be done in the catalog).
+   In this case, the seven day aggregation lives at [tds-configs/ncml_files/mur-2019-01-01-seven-day-agg.ncml](https://github.com/lesserwhirls/tds-s3-jpl-test/blob/main/tds-configs/ncml_files/mur-2019-01-01-seven-day-agg.ncml).
+   Finally, the NcML aggregation must be defined by listing the individual granules (i.e. there isn't an S3 version of `<datasetScan>` yet).
+
+   These restrictions will be removed in future verions of the TDS, but for now, welcome to the bleeding edge of our S3 capibilities.
 
 ## A special note about `files/creds/aws_creds`
 
