@@ -9,7 +9,10 @@
   <!-- here we map an alias to an s3 bucket called "unidata-jpl-sandbox" -->
   <!-- "mur-bucket" is the name of a profile containing aws credentials -->
   <!-- "aws" is a generic host name used in the special case of S3 -->
-  <datasetRoot path="mur-test" location="cdms3://mur-bucket@aws/unidata-jpl-sandbox" />
+  <!-- uncomment next line to use credentials file -->
+  <!-- datasetRoot path="mur-test" location="cdms3://mur-bucket@aws/unidata-jpl-sandbox" / -->
+  <!-- If using IAM to manage access to S3, use the following -->
+  <datasetRoot path="mur-test" location="cdms3:unidata-jpl-sandbox" />
 
   <!-- location is a path inside the docker container -->
   <datasetRoot path="aggregations" location="/usr/local/tomcat/content/thredds/ncml_files" />
@@ -89,8 +92,12 @@
       </metadata>
     </dataset>
 
-    <dataset name="2019-01-01 - 2019-01-07 Aggregation" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01-seven-day"
-      urlPath="aggregations/mur-2019-01-01-seven-day-agg.ncml">
+    <!-- If obtaining credentils from a prfile in an AWS credentials file, uncomment the following --> 
+    <!--dataset name="2019-01-01 - 2019-01-07 Aggregationi (file auth)" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01-seven-day"
+      urlPath="aggregations/mur-2019-01-01-seven-day-agg-with-cred-profile.ncml"-->
+    <!-- Use the following if obtaining credentials from IAM -->
+    <dataset name="2019-01-01 - 2019-01-07 Aggregation (IAM auth)" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01-seven-day"
+      urlPath="aggregations/mur-2019-01-01-seven-day-agg-iam.ncml">
       <metadata>
         <timeCoverage>
           <start>2019-01-01T00:00:00</start>
