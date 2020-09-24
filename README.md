@@ -92,6 +92,11 @@ This will reduce the time needed by the TDS to generate a catalog at a given lev
 
    These restrictions will be removed in future versionsof the TDS, but for now, welcome to the bleeding edge of our S3 capabilities.
 
+   One final note: if you are using an IAM policy, you will need to tell the TDS which AWS region your S3 bucket resides.
+   There are two options that do not require the use of a credentials file:
+   1. Set the `AWS_REGION` environmental variable to a valid region code (e.g. `export AWS_REGION=us-west-2` - see https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints for the options).
+   2. Set the `aws.region` Java System property on the Java procress running your servlet container (e.g. `-Daws.region=-us-west-2`)
+
 ## A special note about `files/creds/aws_creds`
 
 The Unidata version of `aws_creds` has a profile named `mur-bucket`, which has the credentials needed to do basic read and list object calls on the bucket.
