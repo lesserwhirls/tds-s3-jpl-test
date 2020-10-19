@@ -16,3 +16,4 @@ tds-configs/state
 tds-configs/templates
 logs/
 
+*.jar
