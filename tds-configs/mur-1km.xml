@@ -6,10 +6,10 @@
   xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0
   http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
-  <!-- here we map an alias to an s3 bucket called "unidata-jpl-sandbox" -->
-  <!-- "mur-bucket" is the name of a profile containing aws credentials -->
-  <!-- "aws" is a generic host name used in the special case of S3 -->
-  <!-- uncomment next line to use credentials file -->
+  <!-- here we map an alias to an s3 bucket called "unidata-jpl-sandbox"
+       "mur-bucket" is the name of a profile containing aws credentials
+       "aws" is a generic host name used in the special case of S3
+       uncomment next line to use credentials file -->
   <!-- datasetRoot path="mur-test" location="cdms3://mur-bucket@aws/unidata-jpl-sandbox" / -->
   <!-- If using IAM to manage access to S3, use the following -->
   <datasetRoot path="mur-test" location="cdms3:unidata-jpl-sandbox" />
@@ -17,16 +17,15 @@
   <!-- location is a path inside the docker container -->
   <datasetRoot path="aggregations" location="/usr/local/tomcat/content/thredds/ncml_files" />
 
-  <dataset name="GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)">
-
+  <dataset name="GHRSST Level 4 MUR Global Foundation Sea Surface Temperature 1km Analysis (v4.1)">
     <metadata inherited="true">
       <serviceName>obstoreGrid</serviceName>
       <description>
         A Group for High Resolution Sea Surface Temperature (GHRSST) Level 4
-        sea surface temperature analysis produced as a retrospective dataset 
+        sea surface temperature analysis produced as a retrospective dataset
         (four day latency) and near-real-time dataset (one day latency) at the
         JPL Physical Oceanography DAAC using wavelets as basis functions in an
-	optimal interpolation approach on a global 0.01 degree grid. The 
+	optimal interpolation approach on a global 0.01 degree grid. The
         version 4 Multiscale Ultrahigh Resolution (MUR) L4 analysis is based
         upon nighttime GHRSST L2P skin and subskin SST observations from
         several instruments including the NASA Advanced Microwave Scanning
@@ -42,7 +41,7 @@
         The dataset also contains additional variables for some granules
         including a SST anomaly derived from a MUR climatology and the temporal
         distance to the nearest IR measurement for each pixel. This dataset is
-        funded by the NASA MEaSUREs program 
+        funded by the NASA MEaSUREs program
         (http://earthdata.nasa.gov/our-community/community-data-system-programs/measures-projects),
         and created by a team led by Dr. Toshio M. Chin from JPL. It adheres to
         the GHRSST Data Processing Specification (GDS) version 2 format
@@ -82,7 +81,10 @@
       <dataFormat>NetCDF-4</dataFormat>
     </metadata>
 
-    <dataset name="2019-01-01 MUR Global v4.1" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01"
+    <!--
+      Single granule
+    -->
+    <dataset name="2019-01-01 (single granule)" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01"
       urlPath="mur-test/MUR/2019_01_01_090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc">
       <metadata>
         <timeCoverage>
@@ -90,22 +92,96 @@
           <end>2019-01-01T23:59:59</end>
         </timeCoverage>
       </metadata>
-    </dataset>
+    </dataset> <!-- End of single granule -->
 
-    <!-- If obtaining credentils from a prfile in an AWS credentials file, uncomment the following --> 
-    <!--dataset name="2019-01-01 - 2019-01-07 Aggregationi (file auth)" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01-seven-day"
+    <!--
+      Seven day NcML aggregation, NcML file based, explicit granule listing
+    -->
+    <!-- If obtaining credentils from a prfile in an AWS credentials file, uncomment the following -->
+    <!--dataset name="2019-01-01 - 2019-01-07 Aggregation" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01-seven-day"
       urlPath="aggregations/mur-2019-01-01-seven-day-agg-with-cred-profile.ncml"-->
     <!-- Use the following if obtaining credentials from IAM -->
-    <dataset name="2019-01-01 - 2019-01-07 Aggregation (IAM auth)" ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01-seven-day"
-      urlPath="aggregations/mur-2019-01-01-seven-day-agg-iam.ncml">
+    <dataset name="2019-01-01 - 2019-01-07 NcML file Aggregation"
+             ID="MUR-JPL-L4-GLOB-v4.1-2019-01-01-seven-day"
+             urlPath="aggregations/mur-2019-01-01-seven-day-agg-iam.ncml">
       <metadata>
         <timeCoverage>
           <start>2019-01-01T00:00:00</start>
           <end>2019-01-07T23:59:59</end>
         </timeCoverage>
       </metadata>
-    </dataset>
-  </dataset>
+    </dataset> <!-- End of seven day NcML agg, file based -->
 
+    <!--
+      One month aggregation, NcML file based, scan
+    -->
+    <dataset name="January 2019 NcML file Scan Aggregation"
+             ID="MUR-JPL-L4-GLOB-v4.1-2019-01-ncml-file"
+             urlPath="aggregations/mur-2019-01-iam.ncml">
+      <metadata>
+        <timeCoverage>
+          <start>2019-01-01T00:00:00</start>
+          <end>2019-01-31T23:59:59</end>
+        </timeCoverage>
+      </metadata>
+    </dataset> <!-- End of one month scan agg, file based -->
+
+    <!--
+      One month aggregation, scan based, defined in catalog
+    -->
+    <dataset name="January 2019 NcML Scan Aggregation"
+             ID="MUR-JPL-L4-GLOB-v4.1-2019-01"
+             urlPath="scan-aggregation/mur-2019-01.nc">
+      <metadata>
+        <timeCoverage>
+          <start>2019-01-01T00:00:00</start>
+          <end>2019-01-31T23:59:59</end>
+        </timeCoverage>
+      </metadata>
+      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+        <aggregation dimName="time" type="joinExisting">
+          <scan location="cdms3:unidata-jpl-sandbox?MUR/2019_01"
+                dateFormatMark="MUR/#yyyy_MM_dd"
+                suffix=".nc" />
+        </aggregation>
+      </netcdf>
+    </dataset> <!-- End of one month scan agg -->
+
+    <!--
+      One year aggregation, scan based, defined in catalog
+    -->
+    <dataset name="2019 Scan Aggregation"
+             ID="MUR-JPL-L4-GLOB-v4.1-2019"
+             urlPath="scan-aggregation/mur-2019.nc">
+      <metadata>
+        <timeCoverage>
+          <start>2019-01-01T00:00:00</start>
+          <end>2019-12-31T23:59:59</end>
+        </timeCoverage>
+      </metadata>
+      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+        <aggregation dimName="time" type="joinExisting">
+          <scan location="cdms3:unidata-jpl-sandbox?MUR/2019"
+                dateFormatMark="MUR/#yyyy_MM_dd"
+                suffix=".nc" />
+        </aggregation>
+      </netcdf>
+    </dataset> <!-- End of one year scan agg -->
+
+    <!--
+      Full aggregation, scan based, defined in catalog
+    -->
+    <dataset name="2018 - 2019 Scan Aggregation"
+             ID="MUR-JPL-L4-GLOB-v4.1"
+             urlPath="scan-aggregation/mur.nc">
+      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+        <aggregation dimName="time" type="joinExisting">
+          <scan location="cdms3:unidata-jpl-sandbox?MUR/"
+                dateFormatMark="MUR/#yyyy_MM_dd"
+                suffix=".nc" />
+        </aggregation>
+      </netcdf>
+    </dataset> <!-- End of full scan agg -->
+  </dataset>
 </catalog>
 
