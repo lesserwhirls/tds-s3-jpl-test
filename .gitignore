@@ -14,6 +14,7 @@ tds-configs/notebooks
 tds-configs/public
 tds-configs/state
 tds-configs/templates
+tds-configs/README.txt
 logs/
 
 *.jar

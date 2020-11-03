@@ -18,9 +18,14 @@
     <service name="uddc" serviceType="UDDC" base="/thredds/uddc/"/>
   </service>
 
-  <catalogRef xlink:href="mur-1km.xml" 
-    xlink:title="GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)"
-    name="" />
+  <dataset name="GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis">
+    <catalogRef xlink:href="mur-1km.xml"
+      xlink:title="MUR (1 km)"
+      name="" />
 
+    <catalogRef xlink:href="mur-0p25deg.xml"
+      xlink:title="MUR25 (0.25 degree)"
+      name="" />
+  </dataset>
 </catalog>
 
