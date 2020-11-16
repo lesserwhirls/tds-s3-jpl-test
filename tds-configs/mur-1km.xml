@@ -138,7 +138,9 @@
           <end>2019-01-31T23:59:59</end>
         </timeCoverage>
       </metadata>
-      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"
+        id="MUR-JPL-L4-GLOB-v4.1-2019-01"
+        enhance="all">
         <aggregation dimName="time" type="joinExisting">
           <scan location="cdms3:unidata-jpl-sandbox?MUR/2019_01"
                 dateFormatMark="MUR/#yyyy_MM_dd"
@@ -159,7 +161,9 @@
           <end>2019-12-31T23:59:59</end>
         </timeCoverage>
       </metadata>
-      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"
+        id="MUR-JPL-L4-GLOB-v4.1-2019"
+        enhance="all">
         <aggregation dimName="time" type="joinExisting">
           <scan location="cdms3:unidata-jpl-sandbox?MUR/2019"
                 dateFormatMark="MUR/#yyyy_MM_dd"
@@ -174,7 +178,12 @@
     <dataset name="2018 - 2019 Scan Aggregation"
              ID="MUR-JPL-L4-GLOB-v4.1"
              urlPath="scan-aggregation/mur.nc">
-      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+        <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"
+          id="MUR-JPL-L4-GLOB-v4.1"
+          enhance="all">
+        <variable name="analysed_sst" >
+          <attribute name="coordinates" value="time lat lon" />
+        </variable>
         <aggregation dimName="time" type="joinExisting">
           <scan location="cdms3:unidata-jpl-sandbox?MUR/"
                 dateFormatMark="MUR/#yyyy_MM_dd"
