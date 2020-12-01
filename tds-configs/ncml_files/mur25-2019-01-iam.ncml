@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+<netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"
+  enhance="all">
   <aggregation dimName="time" type="joinExisting">
     <scan location="cdms3:unidata-jpl-sandbox?MUR25/2019_01"
       dateFormatMark="MUR25/#yyyy_MM_dd"
