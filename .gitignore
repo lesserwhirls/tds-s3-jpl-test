@@ -16,5 +16,6 @@ tds-configs/state
 tds-configs/templates
 tds-configs/README.txt
 logs/
+benchmark_scripts/logs/
 
 *.jar
