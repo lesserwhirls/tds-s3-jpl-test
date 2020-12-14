@@ -17,5 +17,6 @@ tds-configs/templates
 tds-configs/README.txt
 logs/
 benchmark_scripts/logs/
+benchmark_scripts/logs_for_analysis.tar.bz2
 
 *.jar
