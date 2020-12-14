@@ -1,6 +1,7 @@
 #!/bin/bash
 
-. ./benchmark_util.sh
+. ./config.sh
+. ./util.sh
 
 set_service "ncss"
 
@@ -29,11 +30,7 @@ benchmark_ncss () {
     CURL_DATA_OPTS=""
 }
 
-# subset grid by passing in lat_width, lon_width, number_of_times, accept_type
-grid_subset_from_delta () {
-    let LAT_WIDTH=2*${1}
-    let LON_WIDTH=2*${2}
-
+set_bbox () {
     let NORTH_VAL=${LAT_VAL}+${1}
     let SOUTH_VAL=${LAT_VAL}-${1}
     let EAST_VAL=${LON_VAL}+${2}
@@ -43,9 +40,31 @@ grid_subset_from_delta () {
     SOUTH="south=${SOUTH_VAL}"
     EAST="east=${EAST_VAL}"
     WEST="west=${WEST_VAL}"
+}
+
+# get_accept <accept type>
+# get the ncss accept parameter
+# accept type is one of:
+#  * netcdf3
+#  * netcdf4
+#  * csv
+#  * xml
+#  * waterml
+#
+# ex: var=$(get_accept "csv") 
+get_accept () {
+    echo "accept=${1}"
+}
+
+# subset grid by passing in lat_width, lon_width, number_of_times, accept_type
+grid_subset_from_delta () {
+    let LAT_WIDTH=2*${1}
+    let LON_WIDTH=2*${2}
+
+    set_bbox ${1} ${2}
 
     TOTAL_NUMBER_TIMES=${3}
-    ACCEPT="accept=${4}"
+    ACCEPT=$(get_accept ${4})
 
     # 3D Variable Grid most recent time
     benchmark_ncss "grid-most-recent-${LAT_WIDTH}_lat-${LON_WIDTH}_lon-${RETURN_TYPE}" ${SUBSET_VAR} ${NORTH} ${SOUTH} ${EAST} ${WEST} ${ACCEPT}
@@ -62,7 +81,7 @@ grid_subset_from_delta () {
 }
 
 # only run if base service URL is defined (e.g. https://localhost:8080/dodsC)
-if [ -z ${var+BASE_SERVICE_URL} ]; then
+if [ ! -z ${BASE_SERVICE_URL+var} ]; then
 for DATASET in "${!DATASETS[@]}"
 do
     echo "Working on ${DATASET}"
@@ -72,12 +91,7 @@ do
 
     let TIME_LAST_IDX=${ARGS[0]}-1
 
-    if [[ ${DATASET,,} == *"mur25"* ]]
-    then
-        MUR_TYPE="MUR25"
-    else
-        MUR_TYPE="MUR"
-    fi
+    MUR_TYPE=$(get_mur_type ${DATASET})
 
     CURL_OUT_FMT="\"${MUR_TYPE}, ${CURL_TIMING_FMT}\n\""
     TEE_COMMAND=" | tee -a ${LOG_FILE}"
@@ -92,22 +106,24 @@ do
                 grid_subset_from_delta ${DELTA_LAT} ${DELTA_LON} ${ARGS[0]} ${RETURN_TYPE}
             done
         done
-    done
+    done # GRID SUBSET BENCHMARKS
 
     for RETURN_TYPE in "${GAP_TYPES[@]}"
     do
-        ACCEPT="accept=${RETURN_TYPE}"
+        ACCEPT=$(get_accept ${RETURN_TYPE})
         # 3D Variable Grid-as-point most recent time
-        #benchmark_ncss "gap-most-recent-${RETURN_TYPE}" ${SUBSET_VAR} ${GAP_LAT} ${GAP_LON} ${ACCEPT}
+        benchmark_ncss "gap-most-recent-${RETURN_TYPE}" ${SUBSET_VAR} ${GAP_LAT} ${GAP_LON} ${ACCEPT}
 
-        #if (( ${TIME_LAST_IDX} > 0 ))
-        #then
-            # 3D Variable Grid-as-point every 10th time
-        #benchmark_ncss "gap-every-10th-time-${RETURN_TYPE}" ${SUBSET_VAR} ${GAP_LAT} ${GAP_LON} ${TIME_ALL} ${GAP_TIME_STRIDE} ${ACCEPT}
-        # 3D Variable Grid-as-point all times
-        #benchmark_ncss "var-gap-all-${RETURN_TYPE}" ${SUBSET_VAR} ${GAP_LAT} ${GAP_LON} ${TIME_ALL} ${ACCEPT}
-    #fi
-    done
-    done
+        # If more than one time, do time subsets benchmarks
+	if (( ${ARGS[0]} > 1 ))
+        then
+            # 3D Variable Grid-as-point strided time
+            benchmark_ncss "gap-every-${GAP_TIME_STRIDE}-time-${RETURN_TYPE}" ${SUBSET_VAR} ${GAP_LAT} ${GAP_LON} ${TIME_ALL} ${GAP_TIME_STRIDE} ${ACCEPT}
+
+	    # 3D Variable Grid-as-point all times
+            benchmark_ncss "var-gap-all-times-${RETURN_TYPE}" ${SUBSET_VAR} ${GAP_LAT} ${GAP_LON} ${TIME_ALL} ${ACCEPT}
+        fi
+    done # GRID AS POINT SUBSET BENCHMARKS
+done # DATASET
 fi
 

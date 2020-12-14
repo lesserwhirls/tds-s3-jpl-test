@@ -1,6 +1,7 @@
 #!/bin/bash
 
-. ./benchmark_util.sh
+. ./config.sh
+. ./util.sh
 
 set_service "dodsC"
 
@@ -16,7 +17,7 @@ benchmark_opendap () {
 }
 
 # only run if base service URL is defined (e.g. https://localhost:8080/dodsC)
-if [ -z ${var+BASE_SERVICE_URL} ]; then
+if [ ! -z ${BASE_SERVICE_URL+var} ]; then
 for DATASET in "${!DATASETS[@]}"
 do
     echo "Working on ${DATASET}"
@@ -26,13 +27,8 @@ do
 
     let TIME_LAST_IDX=${ARGS[0]}-1
 
-    if [[ ${DATASET,,} == *"mur25"* ]]; then
-        MUR_TYPE="MUR25"
-        declare -a DIMS=( ${TIME_LAST_IDX} ${MUR25_LAT_LAST_IDX} ${MUR25_LON_LAST_IDX} )
-    else
-        MUR_TYPE="MUR"
-        declare -a DIMS=( ${TIME_LAST_IDX} ${MUR_LAT_LAST_IDX} ${MUR_LON_LAST_IDX} )
-    fi
+    MUR_TYPE=$(get_mur_type ${DATASET})
+    set_mur_dims ${DATASET} ${ARGS[0]}
 
     CURL_OUT_FMT="\"${MUR_TYPE}, ${CURL_TIMING_FMT}\n\""
     TEE_COMMAND=" | tee -a ${LOG_FILE}"
