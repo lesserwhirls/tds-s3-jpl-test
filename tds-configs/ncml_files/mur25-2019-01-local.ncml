@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"
+  enhance="all">
+  <aggregation dimName="time" type="joinExisting">
+	  <scan location="/data/MUR25"
+      dateFormatMark="#yyyyMMdd"
+      suffix=".nc" />
+  </aggregation>
+</netcdf>

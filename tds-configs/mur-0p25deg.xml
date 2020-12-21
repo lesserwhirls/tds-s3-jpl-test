@@ -7,6 +7,7 @@
   http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
   <datasetRoot path="mur25-test" location="cdms3:unidata-jpl-sandbox" />
+  <datasetRoot path="mur-test-local" location="/data/" />
   <datasetRoot path="aggregations" location="/usr/local/tomcat/content/thredds/ncml_files" />
 
   <dataset name="GHRSST Level 4 MUR Global Foundation Sea Surface Temperature 0.25 Degree Analysis (v4.2)">
@@ -71,6 +72,19 @@
     </metadata>
 
     <!--
+      Single granule (local)
+    -->
+    <dataset name="2019-01-01 (single granule local)" ID="LOCAL-MUR25-JPL-L4-GLOB-v4.1-2019-01-01"
+      urlPath="mur-test-local/MUR25/20190101090000-JPL-L4_GHRSST-SSTfnd-MUR25-GLOB-v02.0-fv04.2.nc">
+      <metadata>
+        <timeCoverage>
+          <start>2019-01-01T00:00:00</start>
+          <end>2019-01-01T23:59:59</end>
+        </timeCoverage>
+      </metadata>
+    </dataset> <!-- End of single granule (local) -->
+
+    <!--
       Single granule
     -->
     <dataset name="2019-01-01 (single granule)" ID="MUR25-JPL-L4-GLOB-v4.1-2019-01-01"
@@ -98,6 +112,20 @@
     </dataset> <!-- End of seven day NcML agg, file based -->
 
     <!--
+      One month aggregation, NcML file based, scan (local)
+    -->
+    <dataset name="January 2019 NcML file Scan Aggregation (local)"
+             ID="MUR25-JPL-L4-GLOB-v4.2-2019-01-ncml-file-local"
+             urlPath="aggregations/mur25-2019-01-local.ncml">
+      <metadata>
+        <timeCoverage>
+          <start>2019-01-01T00:00:00</start>
+          <end>2019-01-31T23:59:59</end>
+        </timeCoverage>
+      </metadata>
+    </dataset> <!-- End of one month scan agg, file based (local) -->
+
+    <!--
       One month aggregation, NcML file based, scan
     -->
     <dataset name="January 2019 NcML file Scan Aggregation"
@@ -110,6 +138,29 @@
         </timeCoverage>
       </metadata>
     </dataset> <!-- End of one month scan agg, file based -->
+
+    <!--
+      One month aggregation, scan based, defined in catalog
+    -->
+    <dataset name="January 2019 NcML Scan Aggregation (local)"
+             ID="LOCAL-MUR25-JPL-L4-GLOB-v4.2-2019-01"
+             urlPath="local-scan-aggregation/mur25-2019-01.nc">
+      <metadata>
+        <timeCoverage>
+          <start>2019-01-01T00:00:00</start>
+          <end>2019-01-31T23:59:59</end>
+        </timeCoverage>
+      </metadata>
+      <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"
+        id="LOCAL-MUR25-JPL-L4-GLOB-v4.2-2019-01"
+        enhance="all">
+        <aggregation dimName="time" type="joinExisting">
+		<scan location="/data/MUR25/"
+                dateFormatMark="#yyyyMMdd"
+                suffix=".nc" />
+        </aggregation>
+      </netcdf>
+    </dataset> <!-- End of one month scan agg (local) -->
 
     <!--
       One month aggregation, scan based, defined in catalog

@@ -32,6 +32,12 @@ update_dataset_array () {
     DATASETS[scan-aggregation/mur-2019.nc]="365 ${YEAR_AGG_LOG}"
     DATASETS[scan-aggregation/mur25.nc]="730 ${ALL_AGG_LOG}"
     DATASETS[scan-aggregation/mur.nc]="730 ${ALL_AGG_LOG}"
+    DATASETS[mur-test-local/MUR25/2019_01_01_090000-JPL-L4_GHRSST-SSTfnd-MUR25-GLOB-v02.0-fv04.2.nc]="1 ${SINGLE_GRANULE_LOCAL_LOG}"
+    DATASETS[mur-test-local/MUR/2019_01_01_090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc]="1 ${SINGLE_GRANULE_LOCAL_LOG}"
+    DATASETS[aggregations/mur25-2019-01-local.ncml]="31 ${MONTH_AGG_FILE_LOCAL_LOG}"
+    DATASETS[aggregations/mur-2019-01-local.ncml]="31 ${MONTH_AGG_FILE_LOCAL_LOG}"
+    DATASETS[local-scan-aggregation/mur25-2019-01.nc]="31 ${MONTH_AGG_LOCAL_LOG}"
+    DATASETS[local-scan-aggregation/mur-2019-01.nc]="31 ${MONTH_AGG_LOCAL_LOG}"
 }
 
 # Make log dir if it does not exist

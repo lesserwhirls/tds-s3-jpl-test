@@ -20,3 +20,7 @@ benchmark_scripts/logs/
 benchmark_scripts/logs_for_analysis.tar.bz2
 
 *.jar
+
+fetch_scripts/MUR
+fetch_scripts/MUR25
+
