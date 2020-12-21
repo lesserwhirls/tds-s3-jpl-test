@@ -23,11 +23,20 @@ update_log_file_names () {
     SINGLE_GRANULE_LOG="${LOG_DIR}/${1}_single_granule_benchmark.log"
     remove_file_if_exists ${SINGLE_GRANULE_LOG}
 
+    SINGLE_GRANULE_LOCAL_LOG="${LOG_DIR}/${1}_single_granule_local_benchmark.log"
+    remove_file_if_exists ${SINGLE_GRANULE_LOCAL_LOG}
+
     MONTH_AGG_FILE_LOG="${LOG_DIR}/${1}_one_month_ncml_file_based_agg_benchmark.log"
     remove_file_if_exists ${MONTH_AGG_FILE_LOG}
 
+    MONTH_AGG_FILE_LOCAL_LOG="${LOG_DIR}/${1}_one_month_ncml_file_based_local_agg_benchmark.log"
+    remove_file_if_exists ${MONTH_AGG_FILE_LOCAL_LOG}
+
     MONTH_AGG_LOG="${LOG_DIR}/${1}_one_month_agg_benchmark.log"
     remove_file_if_exists ${MONTH_AGG_LOG}
+
+    MONTH_AGG_LOCAL_LOG="${LOG_DIR}/${1}_one_month_local_agg_benchmark.log"
+    remove_file_if_exists ${MONTH_AGG_LOCAL_LOG}
 
     YEAR_AGG_LOG="${LOG_DIR}/${1}_one_year_agg_benchmark.log"
     remove_file_if_exists ${YEAR_AGG_LOG}
