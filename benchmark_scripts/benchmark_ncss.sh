@@ -16,14 +16,15 @@ TIME_ALL="time=all"
 # benchmark_ncss <name of test> <one or more subset parameter key-value pairs>
 # ex: benchmark_opendap "1d-var-single-val" "var=analysis_sst" "time=all" "latitude=15" "longitude=-50"
 benchmark_ncss () {
-    CURL_DATA_OPTS=""
+    # build --data-urlencode strings to pass to curl
+    for ((DATA_OPT=2; DATA_OPT<=$#; DATA_OPT++))
+    do
+        CURL_DATA_OPTS="${CURL_DATA_OPTS} --data-urlencode \"${!DATA_OPT}\""
+    done
+
+    # make ${ITERATIONS} number of requests
     for (( i=1; i<=${ITERATIONS}; i++ ))
     do
-        # build --data-urlencode strings to pass to curl
-	for ((DATA_OPT=2; DATA_OPT<=$#; DATA_OPT++))
-        do
-            CURL_DATA_OPTS="${CURL_DATA_OPTS} --data-urlencode \"${!DATA_OPT}\""
-        done
         eval "echo -n \"${1}, ${i}, \" ${TEE_COMMAND}"
         eval "${BASE_COMMAND} ${CURL_DATA_OPTS} ${TEE_COMMAND}"
     done
